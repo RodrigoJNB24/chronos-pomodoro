@@ -1,7 +1,9 @@
 import { Container } from './components/Container';
 import { Logo } from './components/Logo';
 import { Menu } from './components/Menu';
-import { CountDown } from './components/CountDown'
+import { CountDown } from './components/CountDown';
+import { DefaultInput } from './components/DefaultInput';
+import { Cycles } from './components/Cycles';
 
 import './style/theme.css';
 import './style/global.css';
@@ -19,6 +21,29 @@ export function App() {
 
       <Container>
         <CountDown />
+      </Container>
+      <Container>
+        <form className='form' action=''>
+          <div className='formRow'>
+            <DefaultInput
+              id='meuInput'
+              type='text'
+              labelText='task:'
+              placeholder='Digite Algo'
+            />
+          </div>
+          <div className='formRow'>
+            <p>Lorem ipsum dolor sit amet.</p>
+          </div>
+
+          <div className='formRow'>
+            <Cycles/>
+          </div>
+
+          <div className='formRow'>
+            <button>Enviar</button>
+          </div>
+        </form>
       </Container>
     </>
   );

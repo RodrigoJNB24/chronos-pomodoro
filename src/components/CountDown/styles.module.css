@@ -1,6 +1,5 @@
 .container {
     font-size: clamp(8rem, 30vw, 16rem);
-    /* font-size: 25vw; */
     text-align: center;
     font-weight: bold;
     line-height: 1.3;
