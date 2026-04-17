@@ -1,5 +1,5 @@
 import { Home } from './pages/Home';
-import { TaskContextProvider } from './Contexts/TaskContext';
+import { TaskContextProvider } from './Contexts/TaskContext/TaskContextProvider';
 
 import './style/theme.css';
 import './style/global.css';
