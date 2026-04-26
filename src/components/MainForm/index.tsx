@@ -13,7 +13,7 @@ export function MainForm() {
   const { state, setState } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
-  const nextCycle = getNextCyle(state.currentCycle)
+  const nextCycle = getNextCyle(state.currentCycle);
   const nextCycleType = getNextCyleType(nextCycle);
 
   function handleCreateNewTask(event: SubmitEvent<HTMLFormElement>) {
@@ -67,10 +67,12 @@ export function MainForm() {
       <div className='formRow'>
         <p>Proximo intervalo é de 25 min.</p>
       </div>
-
-      <div className='formRow'>
-        <Cycles />
-      </div>
+      
+      {state.currentCycle > 0 && (
+        <div className='formRow'>
+          <Cycles />
+        </div>
+      )}
 
       <div className='formRow'>
         <DefaultButton icon={<PlayCircleIcon />} />
