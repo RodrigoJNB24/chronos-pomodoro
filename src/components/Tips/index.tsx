@@ -2,7 +2,6 @@ import { getNextCyleType } from '../../utils/getNextCycleType';
 import { getNextCyle } from '../../utils/getNextCycle';
 import { useTaskContext } from '../../Contexts/TaskContext/useContextProvider';
 
-
 export function Tips() {
   const { state } = useTaskContext();
   const tipsForWhenActiveTask = {
