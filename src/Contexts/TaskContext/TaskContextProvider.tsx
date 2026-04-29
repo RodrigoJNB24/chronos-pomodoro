@@ -14,7 +14,14 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
   const worker = TimerWorkerManager.getInstance();
 
   worker.onmessage(e => {
-    console.log(e.data)
+    const countDownSeconds = e.data;
+    console.log(countDownSeconds)
+
+    if(countDownSeconds <= 0) {
+      console.log('Worker completed');
+      worker.terminate()
+    }
+
   })
 
   useEffect(() => {
@@ -22,8 +29,8 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
       console.log('Worker terminado por falta de activeTask')
       worker.terminate()
     }
-    console.log(state);
-  }, [state]);
+    worker.postMessage(state)
+  }, [worker, state]);
 
   return (
     <TaskContext.Provider value={{ state, dispatch }}>
