@@ -9,6 +9,8 @@ import { getNextCyle } from '../../utils/getNextCycle';
 import { getNextCyleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../Contexts/TaskContext/taskAction';
 import { Tips } from '../Tips';
+import { toast } from 'react-toastify';
+import { showMessage } from '../../adapters/showMessage';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -19,13 +21,14 @@ export function MainForm() {
 
   function handleCreateNewTask(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    showMessage.dismiss()
 
     if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
 
     if (!taskName) {
-      alert('Digite o nome da tarefa!');
+      showMessage.warning('Digite o nome da tarefa!');
       return;
     }
 
@@ -40,9 +43,13 @@ export function MainForm() {
     };
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+
+    showMessage.sucess('Tarefa iniciada')
   }
 
   function hanldeInterruptTask() {
+    showMessage.dismiss();
+    showMessage.error('Tarefa interrompida!')
     dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
