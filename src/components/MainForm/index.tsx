@@ -9,12 +9,12 @@ import { getNextCyle } from '../../utils/getNextCycle';
 import { getNextCyleType } from '../../utils/getNextCycleType';
 import { TaskActionTypes } from '../../Contexts/TaskContext/taskAction';
 import { Tips } from '../Tips';
-import { toast } from 'react-toastify';
 import { showMessage } from '../../adapters/showMessage';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
+  const lastTaskName = state.tasks[state.tasks.length - 1]?.name || '';
 
   const nextCycle = getNextCyle(state.currentCycle);
   const nextCycleType = getNextCyleType(nextCycle);
@@ -63,6 +63,7 @@ export function MainForm() {
           placeholder='Digite Algo'
           ref={taskNameInput}
           disabled={!!state.activeTask}
+          defaultValue={lastTaskName}
         />
       </div>
 
