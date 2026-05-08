@@ -8,9 +8,9 @@ import { useTaskContext } from '../../Contexts/TaskContext/useContextProvider';
 import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
 import { sortTasks, sortTasksOptions } from '../../utils/sortTasks';
-
+import { useEffect, useState } from 'react';
+import { TaskActionTypes } from '../../Contexts/TaskContext/taskAction';
 import styles from './styles.module.css';
-import { useState } from 'react';
 
 export type HomeProps = {
   state: TaskStateModel;
@@ -18,8 +18,7 @@ export type HomeProps = {
 };
 
 export function History() {
-  const { state } = useTaskContext();
-  const sortedTasks = sortTasks({ tasks: state.tasks });
+  const { state, dispatch } = useTaskContext();
   const [sortTaskOptions, setSortTaskOptions] = useState<sortTasksOptions>(
     () => {
       return {
@@ -35,13 +34,31 @@ export function History() {
 
     setSortTaskOptions({
       tasks: sortTasks({
-        direction: newDirection,
         tasks: sortTaskOptions.tasks,
+        direction: newDirection,
         field,
       }),
       direction: newDirection,
       field,
     });
+  }
+
+  useEffect(() => {
+    setSortTaskOptions(prevState => ({
+      ...prevState,
+      tasks: sortTasks({
+        tasks: state.tasks,
+        direction: prevState.direction,
+        field: prevState.field,
+      }),
+    }))
+  }, [state.tasks])
+
+  function handleResetHistory() {
+    if(!confirm('Tem certeza que deseja apagar o historico')) return;
+    
+    dispatch({ type: TaskActionTypes.RESET_STATE })
+    
   }
 
   return (
@@ -51,6 +68,7 @@ export function History() {
           <span>History</span>
           <span className={styles.buttonContainer}>
             <DefaultButton
+              onClick={() => handleResetHistory()}
               icon={<TrashIcon />}
               color='red'
               aria-label='Apagar todo historico'

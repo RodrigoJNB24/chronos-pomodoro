@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { initialTaskState } from './initialTaskState';
 import { TaskContext } from './TaskContext';
-import { taskReducer } from './taskResducer';
+import { taskReducer } from './taskReducer';
 import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
 import { TaskActionTypes } from './taskAction';
 import { loadBeep } from '../../utils/loadBeep';
