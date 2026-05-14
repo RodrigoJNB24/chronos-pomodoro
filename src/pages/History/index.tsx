@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { TrashIcon } from 'lucide-react';
 import { Container } from '../../components/Container';
 import { DefaultButton } from '../../components/DefaultButton';
@@ -8,7 +9,6 @@ import { useTaskContext } from '../../Contexts/TaskContext/useContextProvider';
 import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
 import { sortTasks, sortTasksOptions } from '../../utils/sortTasks';
-import { useEffect, useState } from 'react';
 import { showMessage } from '../../adapters/showMessage';
 import { TaskActionTypes } from '../../Contexts/TaskContext/taskAction';
 
@@ -22,6 +22,7 @@ export type HomeProps = {
 export function History() {
   const { state, dispatch } = useTaskContext();
   const hasTasks = state.tasks.length > 0;
+  const [confirmClearHistory, setConfirmClearHistory] = useState(false);
   const [sortTaskOptions, setSortTaskOptions] = useState<sortTasksOptions>(
     () => {
       return {
@@ -57,10 +58,26 @@ export function History() {
     }));
   }, [state.tasks]);
 
+  useEffect(() => {
+    if (!confirmClearHistory) return;
+
+    setConfirmClearHistory(false);
+  }, [confirmClearHistory]);
+
+  useEffect(() => {
+    return () => {
+      showMessage.dismiss()
+    };
+  }, []);
+
   function handleResetHistory() {
+    showMessage.dismiss();
     showMessage.confirm('Deseja apagar todo o historico?', confirmation => {
-      if (!confirmation) return;
-      dispatch({ type: TaskActionTypes.RESET_STATE });
+      setConfirmClearHistory(confirmation);
+
+      if (confirmation) {
+        dispatch({ type: TaskActionTypes.RESET_STATE });
+      }
     });
   }
 
