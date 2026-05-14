@@ -5,5 +5,3 @@ export function formatDate(timestamp: number) {
   return format(date, 'dd/MM/yyyy HH:mm')
 
 }
-
-console.log(formatDate(1777915614837));
