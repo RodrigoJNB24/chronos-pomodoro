@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { SaveIcon } from 'lucide-react';
 import { Container } from '../../components/Container';
 import { DefaultButton } from '../../components/DefaultButton';
@@ -71,6 +71,10 @@ export function Settings() {
 
     showMessage.sucess('Configurações salvas')
   }
+
+  useEffect(() => {
+    document.title = 'Configurações - Chronos Pomodoro'
+  }, [])
 
   return (
     <MainTemplate>
